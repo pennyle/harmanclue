@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Secret Code Entry</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 2rem;
+            background-color: #f5f5f5;
+        }
+        #codeDisplay {
+            font-size: 2rem;
+            letter-spacing: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+            padding: 1rem;
+            width: 200px;
+            margin: 1rem auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 60px);
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .keypad button {
+            font-size: 1.5rem;
+            padding: 1rem;
+            border-radius: 10px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .keypad button:active {
+            background: #388E3C;
+        }
+        #message {
+            display: none;
+            font-size: 1.5rem;
+            color: #d32f2f;
+            margin-top: 2rem;
+        }
+        #clearBtn {
+            grid-column: span 3;
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Enter the 5-digit code</h2>
+<div id="codeDisplay">_____</div>
+
+<div class="keypad">
+    <button onclick="addDigit(1)">1</button>
+    <button onclick="addDigit(2)">2</button>
+    <button onclick="addDigit(3)">3</button>
+    <button onclick="addDigit(4)">4</button>
+    <button onclick="addDigit(5)">5</button>
+    <button onclick="addDigit(6)">6</button>
+    <button onclick="addDigit(7)">7</button>
+    <button onclick="addDigit(8)">8</button>
+    <button onclick="addDigit(9)">9</button>
+    <button onclick="addDigit(0)">0</button>
+    <button id="clearBtn" onclick="clearCode()">Clear</button>
+</div>
+
+<div id="message">🎉 Secret Unlocked! Here's your message. 🎉</div>
+
+<script>
+    const correctCode = "42819"; // 🔐 Set your secret code here
+    let enteredCode = "";
+
+    function addDigit(digit) {
+        if (enteredCode.length >= 5) return;
+
+        enteredCode += digit;
+        updateDisplay();
+
+        if (enteredCode.length === 5) {
+            if (enteredCode === correctCode) {
+                document.getElementById("message").style.display = "block";
+            } else {
+                alert("Incorrect code. Try again.");
+                clearCode();
+            }
+        }
+    }
+
+    function updateDisplay() {
+        const masked = "●".repeat(enteredCode.length).padEnd(5, "_");
+        document.getElementById("codeDisplay").textContent = masked;
+    }
+
+    function clearCode() {
+        enteredCode = "";
+        updateDisplay();
+        document.getElementById("message").style.display = "none";
+    }
+
+    updateDisplay();
+</script>
+</body>
+</html>
